@@ -22,6 +22,48 @@ public class Admin {
 			return con;
 	 }
 	
+	public String insertAdmin(String username, String  password, String reports)
+	 {
+			String output = "";
+			
+			try
+			{
+				Connection con = connect();
+				
+				if (con == null)
+				{
+					return "Error while connecting to the database for inserting.";
+				}
+				
+				// create a prepared statement
+				String query = " insert into admin (`adminID`,`adminUsername`,`adminPassword`,`adminReports`)"
+								+ " values (?, ?, ?, ?)";
+				
+				PreparedStatement preparedStmt = con.prepareStatement(query);
+				
+				//binding values
+				preparedStmt.setInt(1, 0);
+				preparedStmt.setString(2, username);
+				preparedStmt.setString(3, password);
+				preparedStmt.setString(4, reports);
+				
+				// execute the statement
+				preparedStmt.execute();
+				con.close();
+				
+				String newAdmin = readAdmin();
+				output = "{\"status\":\"success\", \"data\": \"" +
+							newAdmin + "\"}";
+			}
+			catch (Exception e)
+			{
+				output = "{\"status\":\"error\", \"data\": \"Error while inserting the admin.\"}";
+				System.err.println(e.getMessage());
+			}
+			
+			return output;
+} 
+	
 	public String readAdmin()
 	 {
 			String output = "";
@@ -35,7 +77,10 @@ public class Admin {
 		 	}
 		 	
 		 	// Prepare the html table to be displayed
-		 	output = "<table border='1'><tr><th>Admin Username</th><th>Admin Password</th><th>Admin Reports</th><th>Update</th><th>Remove</th></tr>"; 
+		 	output = "<table border='1'><tr><th>Admin Username</th>"
+		 			+ "<th>Admin Password</th><th>Admin Reports</th>"
+		 			+ "<th>Update</th>"
+		 			+ "<th>Remove</th></tr>"; 
 		 	String query = "select * from admin";
 		 	Statement stmt = con.createStatement();
 		 	ResultSet rs = stmt.executeQuery(query);
@@ -67,54 +112,14 @@ public class Admin {
 	 
 	 catch (Exception e)
 	 {
-		 output = "Error while reading the items.";
+		 output = "Error while reading Admin.";
 		 System.err.println(e.getMessage());
 	 }
 	 
 	 return output;
  } 
 	
-	public String insertAdmin(String username, String  password, String reports)
-	 {
-			String output = "";
-			
-			try
-			{
-				Connection con = connect();
-				
-				if (con == null)
-				{
-					return "Error while connecting to the database for inserting.";
-				}
-				
-				// create a prepared statement
-				String query = " insert into admin (`adminID`,`adminUsername`,`adminPassword`,`adminReports`)"
-								+ " values (?, ?, ?, ?)";
-				
-				PreparedStatement preparedStmt = con.prepareStatement(query);
-				
-				//binding values
-				preparedStmt.setInt(1, 0);
-				preparedStmt.setString(2, username);
-				preparedStmt.setString(3, password);
-				preparedStmt.setString(4, reports);
-				
-				// execute the statement
-				preparedStmt.execute();
-				con.close();
-				
-				String newItems = readAdmin();
-				output = "{\"status\":\"success\", \"data\": \"" +
-							newItems + "\"}";
-			}
-			catch (Exception e)
-			{
-				output = "{\"status\":\"error\", \"data\": \"Error while inserting the admin.\"}";
-				System.err.println(e.getMessage());
-			}
-			
-			return output;
- } 
+	
 	
 	public String updateAdmin(String ID, String username, String password,
 	 String reports )

@@ -1,6 +1,6 @@
 <%@page import="com.Admin"%>
-<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-pageEncoding="ISO-8859-1"%>
+<%@page language="java" contentType="text/html; charset=ISO-8859-1" pageEncoding="ISO-8859-1" %>
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -8,15 +8,16 @@ pageEncoding="ISO-8859-1"%>
 <title>Admin Management</title>
 <link rel="stylesheet" href="Views/bootstrap.min.css">
 <script src="Components/jquery-3.2.1.min.js"></script>
-<script src="Components/admin.js"></script>
+<script src="Components/UserAdmin.js"></script>
+
 </head>
 <body>
 <div class="container">
 <div class="row">
 <div class="col-6">
-		<h1>Admin Management V10.1</h1>
+		<h1>Admin Management </h1>
 		
-		<form id="formAdmin" name="formAdmin">
+		<form id="formAdmin" name="formAdmin" method="post" action="admin.jsp">
  			Admin Username: 
  			<input id="adminUsername" name="adminUsername" type="text"
 				 class="form-control form-control-sm">
